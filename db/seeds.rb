@@ -24,7 +24,7 @@ end
 puts "5 skills created"
 
 9.times do |portfolio_item|
-    Portfolio.create!(
+    Portfol io.create!(
        title:"Portfolio title #{portfolio_item}",
        subtitle:"My greate service",
        body:"We are waiting for the outcome of the medical reports and the police investigation report to arrive at a conclusion, Singh told CNN.
