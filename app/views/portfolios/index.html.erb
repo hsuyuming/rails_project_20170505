@@ -1,4 +1,15 @@
-<h1>Portfolio Item</h1>
+<h1>Portfolio Items</h1>
+
+<%= link_to "Create New Item", new_portfolio_url %>
+<%#= link_to "Create New Item", new_portfolio_url, subdomain:"url method can use subdomian" %>
+
+<p>   
+    <%#= new_portfolio_path %> 
+</p>
+    <%#= new_portfolio_url %> 
+<p>
+    
+</p>
 
 <% @portfolio_items.each do |portfolio_item| %>
     <p> <%= portfolio_item.title %> </p>
@@ -7,4 +18,6 @@
     <%#= image_tag portfolio_item.thumb_image  %>
     <%#= image_tag portfolio_item.thumb_image if  !portfolio_item.thumb_image.nil? %>
     <%= image_tag portfolio_item.thumb_image unless portfolio_item.thumb_image.nil? %>
+    <%= link_to "Edit", edit_portfolio_path(portfolio_item.id) %>
+    <a href="/portfolios/<%= portfolio_item.id %>/edit">Edit two</a>
 <%end%>
