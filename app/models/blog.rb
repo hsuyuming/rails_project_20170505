@@ -3,4 +3,6 @@ class Blog < ApplicationRecord
     
     #add validation part
     validates_presence_of :title,:body
+
+    belongs_to :topic
 end

@@ -18,3 +18,6 @@ end
 
 ### cmd
 docker-compose run --service-ports web rails s
+
+### cmd:create reference between table
+docker-compose run web rails g migration add_topic_reference_to_blogs topic:references
