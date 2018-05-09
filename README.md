@@ -15,3 +15,6 @@ def my_great_method
     puts "here it is"
 end
 ```
+
+### cmd
+docker-compose run --service-ports web rails s
