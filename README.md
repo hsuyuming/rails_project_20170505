@@ -91,3 +91,57 @@ end
 ```
 
 rails c =>Skill.create!(title:"Some skill",percent_utilize:80)
+
+
+###
+rails g model Technology name:string portfolio:references
+
+rails db:migrate
+
+```ruby
+class Technology < ApplicationRecord
+   #automatic generate
+  belongs_to :portfolio
+end
+
+```
+
+```ruby
+class Portfolio < ApplicationRecord
+    #need to update has_many
+    has_many :technologies
+    include Placeholder
+    validates_presence_of :title,:body,:main_image,:thumb_image
+
+   
+    #method1
+    def self.angular
+        where(subtitle:"Angular")
+    end
+end
+
+```
+
+```ruby
+#rails c
+portfolio_id:Portfolio.last.id)
+Technology.last.portfolio
+Portfolio.last.technologies
+p = Portfolio.last
+p.technologies.create(name:"Ruby")
+```
+
+Use the different way to generate fake data.
+```ruby
+3.times do |technology|
+    Portfolio.last.technologies.create(
+        name:"Technology #{technology}"
+    )
+end
+
+#rails c 
+Portfolio.last.technologies.count
+```
+
+
+
