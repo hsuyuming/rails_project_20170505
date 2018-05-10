@@ -172,4 +172,37 @@ Portfolio.last.technologies.count
   SQL (1.5ms)  INSERT INTO "technologies" ("name", "portfolio_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Inoic"], ["portfolio_id", 18], ["created_at", "2018-05-10 13:33:58.497756"], ["updated_at", "2018-05-10 13:33:58.497756"]]
    (0.9ms)  COMMIT
 ```
+### Configuring Nested Attributes in the Model(FrontEnd)
+>Part1. portfolios_controller.rb 
+```ruby
+class PortfoliosController < ApplicationController
+    def new
+        @portfolio_item=Portfolio.new
+        #instantiate three version s of this portfolio item of technologies
+        3.times {@portfolio_item.technologies.build}
+    end
+end
 
+def create
+        @portfolio_item=Portfolio.new(params.require(:portfolio).permit(:title, :subtitle, :body, 
+            technologies_attributes: [:name]))
+```
+
+>Part2. new.html.erb Implement the other form
+```erb
+<ul>
+    <%= form.fields_for :technologies do |technology_form| %>
+    <li>
+        <%= technology_form.label :name %>
+        <%= technology_form.text_field :name %>
+    </li>
+    <% end %>
+</ul>
+```
+
+>Part3. modify show.html.erb
+```erb
+<% @portfolio_item.technologies.each do |t| %>
+    <p><%= t.name %></p>
+<%end%>
+```
