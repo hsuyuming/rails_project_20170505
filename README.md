@@ -1,7 +1,7 @@
 # README
 
 >This is a Ruby on Rails 5 application that allows users to create their own portfilois.
-
+>image_size_web:https://placeholder.com/
 ### Features
 -- Read time chat engine for comments
 -- Blog 
@@ -93,7 +93,7 @@ end
 rails c =>Skill.create!(title:"Some skill",percent_utilize:80)
 
 
-###
+###Building an Additional Parent/Child Relationship in Rails 5
 rails g model Technology name:string portfolio:references
 
 rails db:migrate
@@ -143,5 +143,33 @@ end
 Portfolio.last.technologies.count
 ```
 
+### Configuring Nested Attributes in the Model(backend)
+>refactor:originally, we use "scoped action(customer query)" to filter data, now we want to use nested attribute to do that.
 
+```ruby
+class Portfolio < ApplicationRecord
+    has_many :technologies
+    #1 nested attributes + data validation
+    accepts_nested_attributes_for :technologies,
+                                  reject_if: lambda{ |attrs| attrs['name'].blank?}
+
+    include Placeholder
+    validates_presence_of :title,:body,:main_image,:thumb_image
+end
+
+#rails c => test the samll functionality change work well or not.
+#accepts_nested_attributes_for->technologies_attributes , be carefule need pass array(collect).
+Portfolio.create!(title:"Web app",subtitle:"sdasda",body:"sdgsdgsdg",technologies_attributes:[{name:"Ruby on Rails"},{name:"Angular"},{name:"Inoic"}])
+
+Portfolio.last.technologies.count
+``` 
+
+```sql
+ (0.3ms)  BEGIN
+  SQL (0.5ms)  INSERT INTO "portfolios" ("title", "subtitle", "body", "main_image", "thumb_image", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["title", "Web app"], ["subtitle", "sdasda"], ["body", "sdgsdgsdg"], ["main_image", "http://via.placeholder.com/600x400"], ["thumb_image", "http://via.placeholder.com/350x200"], ["created_at", "2018-05-10 13:33:58.484550"], ["updated_at", "2018-05-10 13:33:58.484550"]]
+  SQL (4.1ms)  INSERT INTO "technologies" ("name", "portfolio_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Ruby on Rails"], ["portfolio_id", 18], ["created_at", "2018-05-10 13:33:58.486683"], ["updated_at", "2018-05-10 13:33:58.486683"]]
+  SQL (1.2ms)  INSERT INTO "technologies" ("name", "portfolio_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Angular"], ["portfolio_id", 18], ["created_at", "2018-05-10 13:33:58.492395"], ["updated_at", "2018-05-10 13:33:58.492395"]]
+  SQL (1.5ms)  INSERT INTO "technologies" ("name", "portfolio_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Inoic"], ["portfolio_id", 18], ["created_at", "2018-05-10 13:33:58.497756"], ["updated_at", "2018-05-10 13:33:58.497756"]]
+   (0.9ms)  COMMIT
+```
 
