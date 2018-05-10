@@ -44,3 +44,50 @@ def set_defaults
     self.thumb_image ||= "http://via.placeholder.com/350x200"
 end
 ```
+
+### concern
+What "concern" can do?
+1.essence is whenever you have some type of functionality that doesn't fully belong inside of a model file or it should be shared across a couple different models
+2.Your concern should always have to deal with data there in the model directory.anything there should relate data.
+
+``` ruby
+rails g migration add_badge_to_skills badge:text
+
+rails db:migrate
+
+```
+
+create a concern that can be shared accross the models
+
+create module file in concerns folder=>placeholder.rb
+
+```ruby
+#not class is module (create help module)
+module Placeholder
+    extend ActiveSupport::Concern
+    
+    def self.image_generator(height:,width:)
+        "http://via.placeholder.com/#{height}x#{width}"
+    end
+end
+```
+
+include the module in our model.rb file
+
+```ruby
+class Skill < ApplicationRecord
+    include Placeholder
+    validates_presence_of :title,:percent_utilized 
+
+    after_initialize :set_defaults
+
+    #setting default value regular equal=(will override the value,don't cate the value exist or not)  ||=(if self.main_image == nil self.main_image="")
+    def set_defaults
+        #self.badge ||= "http://via.placeholder.com/250x250"
+        self.badge ||= Placeholder.image_generator(height: '250', width: '250')
+    end
+end
+
+```
+
+rails c =>Skill.create!(title:"Some skill",percent_utilize:80)
