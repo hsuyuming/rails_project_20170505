@@ -200,7 +200,9 @@ def create
 </ul>
 ```
 
->Part3. modify show.html.erb
+>Part3. modif
+
+y show.html.erb
 ```erb
 <% @portfolio_item.technologies.each do |t| %>
     <p><%= t.name %></p>
