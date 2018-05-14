@@ -206,3 +206,22 @@ def create
     <p><%= t.name %></p>
 <%end%>
 ```
+
+
+### Virtual attribute
+> an attribute that we call on some model that isn't actually a column name. create something without having to do a migration.
+
+in the user.rb add virtual attribute.
+```ruby
+#virtual attribute
+def first_name
+    #self.name is saying sepecific name for the user that we're talking about.
+    # "John$Smith".split("$").first
+    # self.name.split[0]
+    self.name.split.first
+end
+
+def last_name
+    self.name.split.last
+end
+```
