@@ -225,3 +225,20 @@ def last_name
     self.name.split.last
 end
 ```
+
+
+> OpenStruct can use us to create mimitracking data(e.p. mock data)
+
+```ruby
+def current_user #user class or OpenStruct class
+    #super || guest_user(actually mimicking a guest user.)
+    super || OpenStruct.new(name:"Guest User",first_name:"Guest",last_name:"User",email:"guest@example.com")
+  end
+```
+
+> type check 
+
+```ruby 
+name = OpenStruct.new(name:"Guest User",first_name:"Guest",last_name:"User",email:"guest@example.com")
+name.
+```
