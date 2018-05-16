@@ -240,5 +240,5 @@ def current_user #user class or OpenStruct class
 
 ```ruby 
 name = OpenStruct.new(name:"Guest User",first_name:"Guest",last_name:"User",email:"guest@example.com")
-name.
+name.is_a?(parentType)
 ```
