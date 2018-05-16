@@ -10,3 +10,18 @@
 <% @portfolio_item.technologies.each do |t| %>
     <p><%= t.name %></p>
 <%end%>
+
+
+<hr>
+
+<%#= params.inspect %>
+<%#= <ActionController::Parameters {"controller"=>"portfolios", "action"=>"show", "id"=>"4"} permitted: false> %>
+<%#= params[:id] %>
+<%#= Portfolio.find(params[:id]).title %>
+
+<hr>
+<%= params.inspect %>
+
+<hr>
+
+<%#= session.inspect %>
