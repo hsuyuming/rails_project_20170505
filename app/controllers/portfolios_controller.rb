@@ -19,7 +19,8 @@ class PortfoliosController < ApplicationController
 
     def create
         @portfolio_item=Portfolio.new(portfolios_params)
-
+        3.times {@portfolio_item.technologies.build}
+        
         respond_to do |format|
             if @portfolio_item.save
               format.html { redirect_to portfolios_path, notice: 'Your portfolio item  is now live.' }
